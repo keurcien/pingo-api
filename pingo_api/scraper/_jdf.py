@@ -1,7 +1,7 @@
 import re
 
-from .recette import register
 from ._base import RecetteBase
+from .recette import register
 
 __all__ = [
     "RecetteJournalDesFemmes",
@@ -9,22 +9,25 @@ __all__ = [
 
 
 class RecetteJournalDesFemmes(RecetteBase):
-
     def __init__(self, url):
         super().__init__(url)
-        
+
     def _get_name(self, soup):
-        self._name = soup.find("h1", { "class": "app_recipe_title_page" }).text
+        self._name = soup.find("h1", {"class": "app_recipe_title_page"}).text
 
     def _get_ingredients(self, soup):
         self._ingredients = []
 
-        if soup.find("ul", { "class": "bu_cuisine_ingredients" }):
-            ingredients = soup.find("ul", { "class": "bu_cuisine_ingredients" }).findAll("li")
-        
+        if soup.find("ul", {"class": "bu_cuisine_ingredients"}):
+            ingredients = soup.find("ul", {"class": "bu_cuisine_ingredients"}).findAll(
+                "li"
+            )
+
             for ingredient in ingredients:
-                ingredient_ = ingredient.find("a", { "class": "bu_cuisine_pointille_vert name" })
-            
+                ingredient_ = ingredient.find(
+                    "a", {"class": "bu_cuisine_pointille_vert name"}
+                )
+
                 if ingredient_:
                     name = ingredient_.text.strip()
                     quantity = ingredient_.previous_sibling
@@ -32,9 +35,11 @@ class RecetteJournalDesFemmes(RecetteBase):
                         quantity = quantity.strip()
                         self._ingredients.append(f"{quantity} {name}")
                     else:
-                        self._ingredients.append(name)              
+                        self._ingredients.append(name)
         else:
-            ingredients = soup.find("ul", { "class": "app_recipe_list" }).findAll("h3", { "class": "app_recipe_ing_title" })
+            ingredients = soup.find("ul", {"class": "app_recipe_list"}).findAll(
+                "h3", {"class": "app_recipe_ing_title"}
+            )
 
             for ingredient in ingredients:
                 if ingredient.a:
@@ -45,12 +50,12 @@ class RecetteJournalDesFemmes(RecetteBase):
                         if quantity:
                             self.ingredients.append(f"{quantity} {name}")
                     else:
-                        self.ingredients.append(name)       
-        
+                        self.ingredients.append(name)
+
     def _get_directions(self, soup):
         self._directions = []
 
-        directions = soup.findAll("li", { "class": "bu_cuisine_recette_prepa" })
+        directions = soup.findAll("li", {"class": "bu_cuisine_recette_prepa"})
         for direction in directions:
             direction_ = direction.text.replace("\n", "")
             tokens = direction_.split()
@@ -59,14 +64,13 @@ class RecetteJournalDesFemmes(RecetteBase):
             else:
                 direction_ = " ".join(tokens[1:])
             self._directions.append(direction_)
-    
-    
+
     def _get_servings(self, soup):
-        if soup.find("span", { "id": "numberPerson" }):
-            servings = soup.find("span", { "id": "numberPerson" }).text
+        if soup.find("span", {"id": "numberPerson"}):
+            servings = soup.find("span", {"id": "numberPerson"}).text
         else:
-            servings = soup.find("span", { "class": "bu_cuisine_title_3--subtitle" }).text
-        
+            servings = soup.find("span", {"class": "bu_cuisine_title_3--subtitle"}).text
+
         self._servings = re.sub("[^0-9]", "", servings)
 
 

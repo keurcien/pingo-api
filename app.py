@@ -6,7 +6,7 @@ class Recette:
 
     def on_post(self, req, resp):
         
-        url = req.media.get('url')
+        url = req.media.get("url")
 
         try:
             
@@ -23,4 +23,4 @@ class Recette:
 
 app = falcon.API()
 
-app.add_route('/recette', Recette())
+app.add_route("/recette", Recette())

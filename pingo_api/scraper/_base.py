@@ -1,6 +1,6 @@
-import requests
-
 from abc import ABC, abstractmethod
+
+import requests
 from bs4 import BeautifulSoup
 
 __all__ = [
@@ -9,7 +9,6 @@ __all__ = [
 
 
 class RecetteBase(ABC):
-
     def __init__(self, url):
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html.parser")

@@ -1,6 +1,6 @@
-from pingo_api.scraper import create_recipe
-
 import pytest
+
+from pingo_api.scraper import create_recipe
 
 
 @pytest.mark.parametrize(
