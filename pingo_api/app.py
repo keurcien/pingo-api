@@ -1,6 +1,6 @@
 import falcon
 import json
-from scraper import recette
+from pingo_api.scraper import recette
 
 class Recette:
 

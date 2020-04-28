@@ -1,10 +1,14 @@
-from scraper.marmiton import RecetteMarmiton
-from scraper.jdf import RecetteJournalDesFemmes
-from scraper.cuisineaz import RecetteCuisineAZ
-from scraper.sccg import Recette750g
+from ._cuisineaz import RecetteCuisineAZ
+from ._jdf import RecetteJournalDesFemmes
+from ._marmiton import RecetteMarmiton
+from ._sccg import Recette750g
+
+__all__ = [
+    "create_recipe",
+]
+
 
 def create_recipe(url):
-    
     tokens = url.split("/")
     
     if "www.marmiton.org" in tokens:
