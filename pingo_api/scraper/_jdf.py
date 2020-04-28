@@ -1,5 +1,6 @@
 import re
 
+from .recette import register
 from ._base import RecetteBase
 
 __all__ = [
@@ -67,3 +68,6 @@ class RecetteJournalDesFemmes(RecetteBase):
             servings = soup.find("span", { "class": "bu_cuisine_title_3--subtitle" }).text
         
         self._servings = re.sub("[^0-9]", "", servings)
+
+
+register("cuisine.journaldesfemmes.fr", RecetteJournalDesFemmes)

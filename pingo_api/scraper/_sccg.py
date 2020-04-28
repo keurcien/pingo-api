@@ -1,5 +1,6 @@
 import re
 
+from .recette import register
 from ._base import RecetteBase
 
 __all__ = [
@@ -36,3 +37,6 @@ class Recette750g(RecetteBase):
             servings = soup.find("h2", { "class": "u-title-section" }).text
         
         self._servings = re.sub("[^0-9]", "", servings)
+
+
+register("www.750g.com", Recette750g)

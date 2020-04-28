@@ -1,5 +1,6 @@
 import re
 
+from .recette import register
 from ._base import RecetteBase
 
 __all__ = [
@@ -37,3 +38,6 @@ class RecetteMarmiton(RecetteBase):
     def _get_directions(self, soup):
         directions = soup.findAll("li", { "class": "recipe-preparation__list__item" })
         self._directions = [direction.text.strip() for direction in directions]
+
+
+register("www.marmiton.org", RecetteMarmiton)

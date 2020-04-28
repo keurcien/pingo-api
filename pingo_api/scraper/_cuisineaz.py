@@ -1,5 +1,6 @@
 import re
 
+from .recette import register
 from ._base import RecetteBase
 
 __all__ = [
@@ -26,3 +27,6 @@ class RecetteCuisineAZ(RecetteBase):
     def _get_servings(self, soup):
         servings = soup.find("span", { "id": "ContentPlaceHolder_LblRecetteNombre" }).text
         self._servings = re.sub("[^0-9]", "", servings)
+
+
+register("www.cuisineaz.com", RecetteCuisineAZ)
