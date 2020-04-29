@@ -1,8 +1,20 @@
 import falcon
 import json
+import sys
+import os
+from falcon_cors import CORS
+
+sys.path.insert(0, os.path.dirname(__file__))
+
 from scraper import recette
 
+cors = CORS(allow_all_origins=True)
+
 class Recette:
+
+    def on_get(self, req, resp):
+        resp.body = json.dumps("Hello World!")
+        resp.status = falcon.HTTP_200
 
     def on_post(self, req, resp):
         
@@ -21,6 +33,6 @@ class Recette:
 
             resp.status = falcon.HTTP_500
 
-app = falcon.API()
+app = falcon.API(middleware=[cors.middleware])
 
 app.add_route('/recette', Recette())
