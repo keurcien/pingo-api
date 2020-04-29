@@ -5,7 +5,11 @@ import os
 from falcon_cors import CORS
 from pingo_api.scraper import recette
 
-cors = CORS(allow_all_origins=True, allow_all_methods=True, allow_all_headers=True)
+cors = CORS(
+    allow_all_origins=True, 
+    allow_all_methods=True, 
+    allow_all_headers=True
+)
 
 class Recette:
 
@@ -32,6 +36,14 @@ class Recette:
                 })
             else:
                 resp.status = falcon.HTTP_400
+                resp.body = json.dumps({
+                    "url": url,
+                    "name": "",
+                    "ingredients": [],
+                    "directions": [],
+                    "servings": []
+                })
+                
         except:
 
             resp.status = falcon.HTTP_500
