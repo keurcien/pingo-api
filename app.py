@@ -1,7 +1,5 @@
-import falcon
 import json
-import sys
-import os
+import falcon
 from falcon_cors import CORS
 from pingo_api.scraper import recette
 
@@ -11,11 +9,12 @@ cors = CORS(
     allow_all_headers=True
 )
 
-class Recette:
+import logging 
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.FileHandler('pingo_api.log'))
+logger.setLevel(logging.DEBUG) 
 
-    def on_get(self, req, resp):
-        resp.body = json.dumps("Hello World!")
-        resp.status = falcon.HTTP_200
+class Recette:
 
     def on_post(self, req, resp):
         
@@ -24,29 +23,22 @@ class Recette:
         try:
             
             r = recette.create_recipe(url)
-            
-            if r:
-                resp.status = falcon.HTTP_200
-                resp.body = json.dumps({
-                    "url": r.url,
-                    "name": r.name,
-                    "ingredients": r.ingredients,
-                    "directions": r.directions,
-                    "servings": r.servings   
-                })
-            else:
-                resp.status = falcon.HTTP_400
-                resp.body = json.dumps({
-                    "url": url,
-                    "name": "",
-                    "ingredients": [],
-                    "directions": [],
-                    "servings": []
-                })
-                
+            resp.status = falcon.HTTP_200
+            resp.body = json.dumps({
+                "url": r.url,
+                "name": r.name,
+                "ingredients": r.ingredients,
+                "directions": r.directions,
+                "servings": r.servings   
+            })
+
         except:
 
-            resp.status = falcon.HTTP_500
+            logger.error(f"Scraping failed: {url}")
+            resp.status = falcon.HTTP_400
+
+
+
 
 app = falcon.API(middleware=[cors.middleware])
 
