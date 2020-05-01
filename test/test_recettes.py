@@ -16,6 +16,15 @@ from pingo_api.scraper import create_recipe
             },
         ),
         (
+            "https://cuisine.journaldesfemmes.fr/recette/307392-steak-hache-a-la-japonaise",
+            {
+                "name": "Steak haché à la japonaise",
+                "servings": "2",
+                "ingredients": 9,
+                "directions": 6,
+            },
+        ),
+        (
             "https://cuisine.journaldesfemmes.fr/recette/176020-pot-au-feu",
             {
                 "name": "Pot-au-feu : la meilleure recette",
