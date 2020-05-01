@@ -12,7 +12,7 @@ black:
 		black -t py36 test
 
 docstring:
-		docformatter -r -i --blank --wrap-summaries 88 --wrap-descriptions 88 --pre-summary-newline toughio
+		docformatter -r -i --blank --wrap-summaries 88 --wrap-descriptions 88 --pre-summary-newline pingo_api
 
 clean:
 		find . -name '__pycache__' -delete -print -o -name '*.pyc' -delete -print
