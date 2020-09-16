@@ -19,7 +19,7 @@ class Recette:
     def on_post(self, req, resp):
         
         url = req.media.get('url')
-
+        print(url)
         try:
             
             r = recette.create_recipe(url)
@@ -45,11 +45,12 @@ class Recette:
                 "servings": r.servings   
             })
 
-        except:
+        except Exception as e:
 
             logger.error(f"Scraping failed: {url}")
             resp.status = falcon.HTTP_400
-
+            raise e
+        
 app = falcon.API(middleware=[cors.middleware])
 
 app.add_route('/recette', Recette())
