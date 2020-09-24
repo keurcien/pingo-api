@@ -37,9 +37,10 @@ class RecetteJournalDesFemmes(RecetteBase):
                     else:
                         self._ingredients.append(name)
         else:
-            ingredients = soup.find("ul", {"class": "app_recipe_list"}).findAll(
-                "h3", {"class": "app_recipe_ing_title"}
-            )
+            recipe_list = soup.find("ul", {"class": "app_recipe_list"})
+            ingredients = recipe_list.findAll("h3", {"class": "app_recipe_ing_title"})
+            if not ingredients:
+                ingredients = soup.findAll("h4", {"class": "app_recipe_ing_title"})
 
             for ingredient in ingredients:
                 if ingredient.a:
@@ -49,6 +50,8 @@ class RecetteJournalDesFemmes(RecetteBase):
                         quantity = " ".join(quantity.split())
                         if quantity:
                             self.ingredients.append(f"{quantity} {name}")
+                        else:
+                            self.ingredients.append(name)
                     else:
                         self.ingredients.append(name)
 

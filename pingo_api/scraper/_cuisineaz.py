@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import re
 
 from ._base import RecetteBase
@@ -29,3 +30,36 @@ class RecetteCuisineAZ(RecetteBase):
 
 
 register("www.cuisineaz.com", RecetteCuisineAZ)
+=======
+import re
+
+from ._base import RecetteBase
+from .recette import register
+
+__all__ = [
+    "RecetteCuisineAZ",
+]
+
+
+class RecetteCuisineAZ(RecetteBase):
+    def __init__(self, url):
+        super().__init__(url)
+
+    def _get_name(self, soup):
+        self._name = soup.find("h1", {"class": "recipe-title"}).text
+
+    def _get_ingredients(self, soup):
+        ingredients = soup.find("section", {"class": "ingredients"}).findAll("li")
+        self._ingredients = [ingredient.text.strip() for ingredient in ingredients]
+
+    def _get_directions(self, soup):
+        directions = soup.find("section", {"class": "instructions"}).findAll("p")
+        self._directions = [direction.text for direction in directions]
+
+    def _get_servings(self, soup):
+        servings = soup.find("span", {"id": "ContentPlaceHolder_LblRecetteNombre"}).text
+        self._servings = re.sub("[^0-9]", "", servings)
+
+
+register("www.cuisineaz.com", RecetteCuisineAZ)
+>>>>>>> bea9df1ba0d4b8f7ce7c5112dd96b70cb303902c
