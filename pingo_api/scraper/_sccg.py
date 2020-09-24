@@ -57,8 +57,11 @@ class Recette750g(RecetteBase):
         super().__init__(url)
 
     def _get_name(self, soup):
-        self._name = soup.find("span", {"class": "recipe-title"}).text.strip()
-
+        try:
+            self._name = soup.find("span", {"class": "recipe-title"}).text.strip()
+        except:
+            self._name = soup.find("span", {"class": "u-title-page"}).text.strip()
+    
     def _get_ingredients(self, soup):
         self._ingredients = []
 
