@@ -49,7 +49,6 @@ class Recette:
 
             logger.error(f"Scraping failed: {url}")
             resp.status = falcon.HTTP_400
-            raise e
         
 app = falcon.API(middleware=[cors.middleware])
 
