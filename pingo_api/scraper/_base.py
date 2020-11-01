@@ -7,7 +7,6 @@ __all__ = [
     "RecetteBase",
 ]
 
-
 class RecetteBase(ABC):
     def __init__(self, url):
         response = requests.get(url)
