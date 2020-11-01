@@ -1,7 +1,6 @@
 import json
 import logging 
 import falcon
-import numpy as np
 from falcon_cors import CORS
 from pingo_api.scraper import recette
 
